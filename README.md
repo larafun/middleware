@@ -40,6 +40,20 @@ class Kernel extends HttpKernel
 }
 ```
 
+## 404 Not Found
+
+Since the 404 message is triggered when no routes have been matched with the requested URL, placing the Middleware in a Route group will not apply it. If you also want your 404 messages to be handled as JSON, you can either use the [Laravel Fallback Routes](https://laravel.com/docs/5.8/routing#fallback-routes), or place the Middleware as the first item in the `$middleware` property of your `Kernel`.
+
+```php
+class Kernel extends HttpKernel
+{
+    protected $middleware = [
+        \Larafun\Middleware\AcceptJsonMiddleware::class,
+        // ...
+    ];
+}
+```
+
 ## Changing Quality
 
 In the rare case you might want a different quality for your `application/json` header, just pass it as a parameter in your `Kernel`.
